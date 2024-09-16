@@ -1,5 +1,5 @@
 ### EX3 Implementation of GSP Algorithm In Python
-### DATE: 
+### DATE: 14-09-2024
 ### AIM: To implement GSP Algorithm In Python.
 ### Description:
 The Generalized Sequential Pattern (GSP) algorithm is a data mining technique used for discovering frequent patterns within a sequence database. It operates by identifying sequences that frequently occur together. GSP works by employing a depth-first search strategy to explore and extract frequent patterns efficiently.
@@ -36,24 +36,35 @@ for each wear category.</p>
 <p align="justify">
 8. Visulaize the sequence patterns using matplotlib.
 </p>
-### Program:
+```
 
-```python
+## Program:
+```
 from collections import defaultdict
 from itertools import combinations
 # Function to generate candidate k-item sequences
 def generate_candidates(dataset, k):
+  candidates = defaultdict(int)
+  for seq in dataset:
+     for comb in combinations (seq, k):
 
+         candidates [comb] += 1
 
-    /WRITE YOUR CODE HERE/
-
+  return {item: support for item, support in candidates.items() if support >= min_support}
 
 #Function to perform GSP algorithm
 def gsp(dataset, min_support):
+  frequent_patterns = defaultdict(int) # Added assignment operator
+  k = 1
+  sequences = dataset
+  while True:
+      candidates = generate_candidates (sequences, k)
+      if not candidates:
+         break
+      frequent_patterns.update(candidates)
+      k += 1
 
-
-  /WRITE YOUR CODE HERE/
-
+  return frequent_patterns
 
 #Example dataset for each category
 top_wear_data = [
@@ -101,12 +112,13 @@ if party_wear_result:
 else:
  print("No frequent sequential patterns found in Party Wear.")
 ```
-### Output:
+ # Output :
+ ![367498762-65ce0b50-552e-4ced-a4fa-bb7613daf827](https://github.com/user-attachments/assets/3a3752ac-f349-4a9d-9c6a-789e929e95b9)
 
-### Visualization:
-```python
-import matplotlib.pyplot as plt
+ # Visualization:
+ ```
 
+ import matplotlib.pyplot as plt
 # Function to visualize frequent sequential patterns with a line plot
 def visualize_patterns_line(result, category):
     if result:
@@ -128,8 +140,11 @@ def visualize_patterns_line(result, category):
 visualize_patterns_line(top_wear_result, 'Top Wear')
 visualize_patterns_line(bottom_wear_result, 'Bottom Wear')
 visualize_patterns_line(party_wear_result, 'Party Wear')
+
 ```
-### Output:
+# Output :
+![367498339-efe41149-b68e-4232-aafe-422275d6cb93](https://github.com/user-attachments/assets/8ff3537c-8c21-4d6e-ab19-d8abf804b940)
+![367498359-6419cb44-4182-4575-9221-26a2e0eb52f7](https://github.com/user-attachments/assets/49a5bea7-8608-40e5-9fa1-9ca019db5773)
 
 
-### Result:
+
